@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('layouts/header'); -%>
+    <body>
+        <!-- Navigation-->
+        <%- include('layouts/navigation'); -%>
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/5.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>G Licence</h1>
+                            <span class="subheading">Apply your licence</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <!-- <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p> -->
+                        <div class="my-5">
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- * * SB Forms Contact Form * *-->
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- This form is pre-integrated with SB Forms.-->
+                            <!-- To make this form functional, sign up at-->
+                            <!-- https://startbootstrap.com/solution/contact-forms-->
+                            <!-- to get an API token!-->
+                            <form id="fetchForm" action="/g/find" method="post">
+                                <div class="form-floating">
+                                    <input class="form-control" id="license" name="licenseno" type="text" placeholder="Enter your license Number..." data-sb-validations="required" />
+                                    <label for="license">License number</label>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">A license number is required.</div>
+                                </div>                                
+                                <br />
+                                <!-- Submit success message-->
+                                <!---->
+                                <!-- This is what your users will see when the form-->
+                                <!-- has successfully submitted-->
+                                <div class="d-none" id="submitSuccessMessage">
+                                    <div class="text-center mb-3">
+                                        <div class="fw-bolder">Form submission successful!</div>
+                                        <!-- To activate this form, sign up at -->
+                                        <br />
+                                        <!-- <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a> -->
+                                    </div>
+                                </div>
+                                <!-- Submit error message-->
+                                <!---->
+                                <!-- This is what your users will see when there is-->
+                                <!-- an error submitting the form-->
+                                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                                <!-- Submit Button-->
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Pull your information</button>
+                            </form>
+                        </div>
+                        <% if (!user && submitPressed) { %>
+                            <div class="my-5">
+                                <h4>User Not Found</h4>
+                                <a href="/g2"><button class="btn btn-primary text-uppercase">Go To G2 Page</button></a>
+                            </div>
+                        </div>   
+                        <div class="row">
+                        <% }else if (user)  {%>
+                            <div class="container">
+                                <h1>Personal Information</h1>
+                                <form action="/g2/update" method="POST">
+                                    <input type="hidden" name="id" value="<%= user.id %>">
+                                    <div class="form-group">
+                                        <label for="fname">First Name</label>
+                                        <input type="text" disabled="disabled" class="form-control" id="fname" name="fname"
+                                            placeholder="Enter First Name" value="<%= user.fname %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lname">Last Name</label>
+                                        <input type="text" disabled="disabled" class="form-control" id="lname" name="lname"
+                                            placeholder="Enter Last Name" value="<%= user.lname %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="license">License Number (8 characters alphanumeric)</label>
+                                        <input type="text" disabled="disabled" class="form-control" id="license" name="license"
+                                            placeholder="Enter License Number" value="<%= user.license %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age">Age</label>
+                                        <input type="number" disabled="disabled" class="form-control" id="age" name="age"
+                                            placeholder="Enter Age" value="<%= user.age%>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dob">Date of Birth</label>
+                                        <input type="text" disabled="disabled" class="form-control" id="dob" name="Dob" placeholder="Enter the Date"
+                                            value="<%= user.dob %>" required>
+                                    </div>
+
+                                    <h1>Car Information</h1>
+                                    <div class="form-group">
+                                        <label for="make">Make</label>
+                                        <input type="text" class="form-control" id="make" name="make"
+                                            placeholder="Enter Make" value="<%= user.car_details?.make %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="model">Model</label>
+                                        <input type="text" class="form-control" id="model" name="model"
+                                            placeholder="Enter Model" value="<%= user.car_details?.model %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="year">Year</label>
+                                        <input type="number" class="form-control" id="year" name="year"
+                                            placeholder="Enter Year" value="<%= user.car_details?.year%>" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="pno">Plate Number</label>
+                                        <input type="text" class="form-control" id="pno" name="pno"
+                                            placeholder="Enter Plate Number" value="<%= user.car_details?.pno %>" required>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                                </form>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Footer-->
+        <%- include('layouts/footer'); -%>
+        <%- include('layouts/scripts'); -%>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    </body>
+</html>
